@@ -57,6 +57,7 @@
             border-radius: 20px;
             padding: 5px 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 10; /* 다른 요소 위에 겹치지 않도록 z-index 추가 */
         }
 
         .search-input {
@@ -162,7 +163,7 @@
 
     <div class="search-box">
         <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
-        <button class="search-btn" onclick="showFoolResult()">
+        <button class="search-btn" onclick="openFoolResultNewTab()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
             </svg>
@@ -211,6 +212,7 @@
             document.getElementById('question-2').style.display = 'block';
         }
 
+        // 테스트 문제에서 오답을 선택했을 때 사용되는 함수
         function showFoolResult() {
             document.querySelector('.main-container').style.display = 'none';
             document.getElementById('fool-result').style.display = 'block';
@@ -223,13 +225,91 @@
             createConfetti('confetti-container-genius');
         }
 
+        // 돋보기 버튼을 눌렀을 때 새 창에서 결과를 보여주는 함수
+        function openFoolResultNewTab() {
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>결과</title>
+                    <style>
+                        body {
+                            font-family: sans-serif;
+                            text-align: center;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            height: 100vh;
+                            margin: 0;
+                        }
+                        h2 { font-size: 32px; }
+                        p { font-size: 24px; color: red; }
+                        @keyframes tear-fall {
+                            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+                            50% { opacity: 1; }
+                            100% { transform: translateY(200px) scale(1); opacity: 0; }
+                        }
+                        .tear-container-style {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            pointer-events: none;
+                            overflow: hidden;
+                            z-index: 9999;
+                        }
+                        .tear-piece {
+                            width: 15px;
+                            height: 15px;
+                            background-color: #00bfff;
+                            border-radius: 50%;
+                            position: absolute;
+                            animation: tear-fall 3s forwards;
+                            opacity: 0;
+                            transform: rotate(20deg);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div id="tear-container-fool" class="tear-container-style"></div>
+                    <h2>결과:</h2>
+                    <p>당신의 지능 지수는 <span style="font-size: 24px; color: red;">바보입니다!</span></p>
+                    <p>다시 한 번 도전해 보세요!</p>
+                    <script>
+                        function createTears(containerId) {
+                            const container = document.getElementById(containerId);
+                            if (!container) return; // 요소가 없으면 함수 종료
+                            while (container.firstChild) {
+                                container.removeChild(container.firstChild);
+                            }
+                            for (let i = 0; i < 30; i++) {
+                                const piece = document.createElement('div');
+                                piece.classList.add('tear-piece');
+                                piece.style.left = Math.random() * 100 + '%';
+                                piece.style.animationDelay = Math.random() * 2 + 's';
+                                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                                container.appendChild(piece);
+                            }
+                        }
+                        window.onload = function() {
+                            createTears('tear-container-fool');
+                        };
+                    </script>
+                </body>
+                </html>
+            `);
+            newWindow.document.close();
+        }
+
         function createConfetti(containerId) {
             const container = document.getElementById(containerId);
             const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
-
             for (let i = 0; i < 150; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('confetti-piece');
@@ -254,7 +334,6 @@
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
-
             for (let i = 0; i < 30; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('tear-piece');
