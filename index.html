@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>바보 테스트</title>
+    <title>똑똑이 테스트</title>
     <style>
         /* body 태그에 Flexbox 속성 추가 */
         body { 
@@ -18,11 +18,13 @@
         }
         
         .main-container {
+            /* body에 중앙 정렬이 이미 적용되어 있으므로 불필요한 Flexbox 속성 제거 */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            width: 100%; /* 너비를 100%로 설정하여 중앙 정렬이 잘 작동하도록 함 */
         }
         
         .question-box { 
@@ -58,23 +60,23 @@
             cursor: pointer;
             padding: 0 5px;
         }
-
+        
         /* 폭죽 애니메이션 스타일 수정 */
         @keyframes confetti-burst {
             0% {
-                transform: translate(-50%, -50%) scale(0.5) rotate(0deg); /* 시작: 중앙에서 작게 */
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg); 
                 opacity: 0;
             }
             10% {
-                transform: translate(-50%, -50%) scale(1) rotate(180deg); /* 중앙에서 터지기 시작 */
+                transform: translate(-50%, -50%) scale(1) rotate(180deg);
                 opacity: 1;
             }
             20% {
-                transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg); /* 파편이 흩어지는 최대 범위 */
+                transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg);
                 opacity: 1;
             }
             100% {
-                transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg); /* 중력으로 낙하하며 사라짐 */
+                transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -131,12 +133,12 @@
 <body>
 
     <div id="test-start">
-        <h2>당신의 지능을 테스트해보세요!</h2>
+        <h2>당신이 똑똑하다는 걸 증명하세요!</h2>
         <button class="answer-btn" onclick="startTest()">테스트 시작</button>
     </div>
 
     <div class="search-box">
-        <input type="text" class="search-input" placeholder="여기에 검색해보세요...">
+        <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
         <button class="search-btn" onclick="showFoolResult()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
         </button>
@@ -148,6 +150,7 @@
             <button class="answer-btn" onclick="nextQuestion()">빨강</button>
             <button class="answer-btn" onclick="showFoolResult()">초록</button>
             <button class="answer-btn" onclick="showFoolResult()">파랑</button>
+            <button class="answer-btn" onclick="showFoolResult()">색맹을 고려하여 회색, 어두운 갈색, 또는 탁한 노란색</button>
         </div>
 
         <div id="question-2" class="question-box" style="display:none;">
@@ -161,15 +164,15 @@
     <div id="fool-result" style="display:none;">
         <div id="tear-container-fool" class="tear-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: red;">당신의 지능 지수는 **바보**입니다!</p>
-        <p>엉엉 ㅠㅠ 바보 인증!</p> 
+        <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
+        <p>다시 한 번 도전해 보세요!</p> 
     </div>
     
     <div id="genius-result" style="display:none;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 **천재**입니다!</p>
-        <p>놀랍군요! 당신은 이 테스트를 통과했습니다!</p>
+        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
+        <p>정말 놀라워요!! 축하드려용!</p>
     </div>
 
     <script>
@@ -197,30 +200,29 @@
         
         function createConfetti(containerId) {
             const container = document.getElementById(containerId);
-            const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a']; // 더 선명한 색상
+            const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
 
-            for (let i = 0; i < 150; i++) { // 파티클 수 증가
+            for (let i = 0; i < 150; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('confetti-piece');
                 piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-                // 터지는 방향 및 낙하 위치 계산 (삼각함수 사용)
-                const angle = Math.random() * 2 * Math.PI; // 0 ~ 360도
-                const burstRadius = Math.random() * 300 + 100; // 100 ~ 400px 범위
+                const angle = Math.random() * 2 * Math.PI;
+                const burstRadius = Math.random() * 300 + 100;
                 const endX = Math.cos(angle) * burstRadius;
                 const endY = Math.sin(angle) * burstRadius;
-                const fallY = 1000; // 화면 아래로 충분히 떨어지도록 설정
+                const fallY = 1000;
 
                 piece.style.setProperty('--confetti-x', `${endX}px`);
                 piece.style.setProperty('--confetti-y', `${endY}px`);
-                piece.style.setProperty('--confetti-end-x', `${(Math.random() - 0.5) * 500}px`); // 좌우로 약간씩 흔들리며 떨어지도록
+                piece.style.setProperty('--confetti-end-x', `${(Math.random() - 0.5) * 500}px`);
                 piece.style.setProperty('--confetti-end-y', `${fallY}px`);
                 
                 piece.style.animationDelay = `${Math.random() * 0.5}s`;
-                piece.style.animationDuration = `${Math.random() * 2 + 2}s`; // 애니메이션 시간 증가
+                piece.style.animationDuration = `${Math.random() * 2 + 2}s`;
 
                 container.appendChild(piece);
             }
