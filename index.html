@@ -1,249 +1,269 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>똑똑이 테스트</title>
-    <style>
-        /* body 태그에 Flexbox 속성 추가 */
-        body { 
-            font-family: sans-serif; 
-            text-align: center; 
-            padding: 0; 
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative; /* 자식 요소의 절대 위치 기준이 되도록 추가 */
-        }
-        
-        .main-container {
-            /* body에 중앙 정렬이 이미 적용되어 있으므로 불필요한 Flexbox 속성 제거 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh; /* 뷰포트 전체 높이를 사용 */
-            width: 100%; /* 너비를 100%로 설정하여 중앙 정렬이 잘 작동하도록 함 */
-        }
-        
-        .question-box { 
-            border: 2px solid #ccc; 
-            padding: 20px; 
-            border-radius: 10px; 
-            margin-bottom: 20px;
-        }
-        .answer-btn { background-color: #ffcccc; color: #333; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 5px; border-radius: 5px; }
-        
-        /* 검색창 스타일 수정: 상단 중앙으로 이동 */
-        .search-box {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 5%; /* 상단에서 5% 떨어진 위치로 조정 */
-            left: 50%;
-            transform: translateX(-50%);
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            padding: 5px 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .search-input {
-            border: none;
-            outline: none;
-            font-size: 16px;
-            width: 300px;
-        }
-        .search-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0 5px;
-        }
-        
-        /* 폭죽 애니메이션 스타일 수정 */
-        @keyframes confetti-burst {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5) rotate(0deg); 
-                opacity: 0;
-            }
-            10% {
-                transform: translate(-50%, -50%) scale(1) rotate(180deg);
-                opacity: 1;
-            }
-            20% {
-                transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg);
-                opacity: 0;
-            }
-        }
-        .confetti-container-style {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 9999;
-        }
-        .confetti-piece {
-            width: 10px;
-            height: 10px;
-            background-color: #ff0000;
-            position: absolute;
-            left: 50%; /* 파티클 생성 위치를 화면 중앙으로 설정 */
-            top: 50%;
-            animation: confetti-burst 3s forwards; /* 새로운 애니메이션 적용 */
-            opacity: 0;
-            transform: rotate(45deg);
-        }
+    <title>똑똑이 테스트</title>
+    <style>
+        /* Flexbox를 이용해 전체 페이지 콘텐츠를 중앙에 배치 */
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative; /* 자식 요소의 절대 위치 기준이 되도록 추가 */
+        }
 
-        /* 눈물 애니메이션 스타일 추가 */
-        @keyframes tear-fall {
-            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(200px) scale(1); opacity: 0; }
-        }
-        .tear-container-style {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 9999;
-        }
-        .tear-piece {
-            width: 15px;
-            height: 15px;
-            background-color: #00bfff;
-            border-radius: 50%;
-            position: absolute;
-            animation: tear-fall 3s forwards;
-            opacity: 0;
-            transform: rotate(20deg);
-        }
-    </style>
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 뷰포트 전체 높이를 사용 */
+            width: 100%;
+        }
+
+        .question-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .answer-btn {
+            background-color: #ffcccc;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        /* 검색창 스타일 수정: 상단 중앙으로 이동 */
+        .search-box {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 5%; /* 상단에서 5% 떨어진 위치로 조정 */
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 5px 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            width: 300px;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+
+        /* 폭죽 애니메이션 스타일 */
+        @keyframes confetti-burst {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                transform: translate(-50%, -50%) scale(1) rotate(180deg);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti-container-style {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        .confetti-piece {
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            animation: confetti-burst 3s forwards;
+            opacity: 0;
+            transform: rotate(45deg);
+        }
+
+        /* 눈물 애니메이션 스타일 */
+        @keyframes tear-fall {
+            0% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(200px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .tear-container-style {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        .tear-piece {
+            width: 15px;
+            height: 15px;
+            background-color: #00bfff;
+            border-radius: 50%;
+            position: absolute;
+            animation: tear-fall 3s forwards;
+            opacity: 0;
+            transform: rotate(20deg);
+        }
+    </style>
 </head>
 <body>
+    <div id="test-start">
+        <h2>당신이 똑똑하다는 걸 증명하세요!</h2>
+        <button class="answer-btn" onclick="startTest()">테스트 시작</button>
+    </div>
 
-    <div id="test-start">
-        <h2>당신이 똑똑하다는 걸 증명하세요!</h2>
-        <button class="answer-btn" onclick="startTest()">테스트 시작</button>
-    </div>
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
+        <button class="search-btn" onclick="showFoolResult()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg>
+        </button>
+    </div>
 
-    <div class="search-box">
-        <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
-        <button class="search-btn" onclick="showFoolResult()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-        </button>
-    </div>
-    
-    <div class="main-container" style="display:none;">
-        <div id="question-1" class="question-box">
-            <h3>문제 1: 사과는 무슨 색인가요?</h3>
-            <button class="answer-btn" onclick="nextQuestion()">빨강</button>
-            <button class="answer-btn" onclick="showFoolResult()">초록</button>
-            <button class="answer-btn" onclick="showFoolResult()">파랑</button>
+    <div class="main-container" style="display:none;">
+        <div id="question-1" class="question-box">
+            <h3>문제 1: 사과는 무슨 색인가요?</h3>
+            <button class="answer-btn" onclick="nextQuestion()">빨강</button>
+            <button class="answer-btn" onclick="showFoolResult()">초록</button>
+            <button class="answer-btn" onclick="showFoolResult()">파랑</button>
             <button class="answer-btn" onclick="showFoolResult()">색맹을 고려하여 회색, 어두운 갈색, 또는 탁한 노란색</button>
-        </div>
+        </div>
 
-        <div id="question-2" class="question-box" style="display:none;">
-            <h3>문제 2: 6+6+6*6*0=?</h3>
-            <button class="answer-btn" onclick="showGeniusResult()">12</button>
-            <button class="answer-btn" onclick="showFoolResult()">0</button>
-            <button class="answer-btn" onclick="showFoolResult()">6</button>
-        </div>
-    </div>
-    
-    <div id="fool-result" style="display:none;">
-        <div id="tear-container-fool" class="tear-container-style"></div>
-        <h2>결과:</h2>
-        <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
-        <p>다시 한 번 도전해 보세요!</p> 
-    </div>
-    
-    <div id="genius-result" style="display:none;">
-        <div id="confetti-container-genius" class="confetti-container-style"></div>
-        <h2>결과:</h2>
-        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>정말 놀라워요!! 축하드려용!</p>
-    </div>
+        <div id="question-2" class="question-box" style="display:none;">
+            <h3>문제 2: 6+6+6*6*0=?</h3>
+            <button class="answer-btn" onclick="showGeniusResult()">12</button>
+            <button class="answer-btn" onclick="showFoolResult()">0</button>
+            <button class="answer-btn" onclick="showFoolResult()">6</button>
+        </div>
+    </div>
 
-    <script>
-        function startTest() {
-            document.getElementById('test-start').style.display = 'none';
-            document.querySelector('.main-container').style.display = 'flex';
-        }
+    <div id="fool-result" style="display:none;">
+        <div id="tear-container-fool" class="tear-container-style"></div>
+        <h2>결과:</h2>
+        <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
+        <p>다시 한 번 도전해 보세요!</p>
+    </div>
 
-        function nextQuestion() {
-            document.getElementById('question-1').style.display = 'none';
-            document.getElementById('question-2').style.display = 'block';
-        }
-        
-        function showFoolResult() {
-            document.querySelector('.main-container').style.display = 'none';
-            document.getElementById('fool-result').style.display = 'block';
-            createTears('tear-container-fool');
-        }
+    <div id="genius-result" style="display:none;">
+        <div id="confetti-container-genius" class="confetti-container-style"></div>
+        <h2>결과:</h2>
+        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
+        <p>정말 놀라워요!! 축하드려용!</p>
+    </div>
 
-        function showGeniusResult() {
-            document.querySelector('.main-container').style.display = 'none';
-            document.getElementById('genius-result').style.display = 'block';
-            createConfetti('confetti-container-genius');
-        }
-        
-        function createConfetti(containerId) {
-            const container = document.getElementById(containerId);
-            const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+    <script>
+        function startTest() {
+            document.getElementById('test-start').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
+        }
 
-            for (let i = 0; i < 150; i++) {
-                const piece = document.createElement('div');
-                piece.classList.add('confetti-piece');
-                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        function nextQuestion() {
+            document.getElementById('question-1').style.display = 'none';
+            document.getElementById('question-2').style.display = 'block';
+        }
 
-                const angle = Math.random() * 2 * Math.PI;
-                const burstRadius = Math.random() * 300 + 100;
-                const endX = Math.cos(angle) * burstRadius;
-                const endY = Math.sin(angle) * burstRadius;
-                const fallY = 1000;
+        function showFoolResult() {
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('fool-result').style.display = 'block';
+            createTears('tear-container-fool');
+        }
 
-                piece.style.setProperty('--confetti-x', `${endX}px`);
-                piece.style.setProperty('--confetti-y', `${endY}px`);
-                piece.style.setProperty('--confetti-end-x', `${(Math.random() - 0.5) * 500}px`);
-                piece.style.setProperty('--confetti-end-y', `${fallY}px`);
-                
-                piece.style.animationDelay = `${Math.random() * 0.5}s`;
-                piece.style.animationDuration = `${Math.random() * 2 + 2}s`;
+        function showGeniusResult() {
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('genius-result').style.display = 'block';
+            createConfetti('confetti-container-genius');
+        }
 
-                container.appendChild(piece);
-            }
-        }
+        function createConfetti(containerId) {
+            const container = document.getElementById(containerId);
+            const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
 
-        function createTears(containerId) {
-            const container = document.getElementById(containerId);
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+            for (let i = 0; i < 150; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('confetti-piece');
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * 2 * Math.PI;
+                const burstRadius = Math.random() * 300 + 100;
+                const endX = Math.cos(angle) * burstRadius;
+                const endY = Math.sin(angle) * burstRadius;
+                const fallY = 1000;
+                piece.style.setProperty('--confetti-x', `${endX}px`);
+                piece.style.setProperty('--confetti-y', `${endY}px`);
+                piece.style.setProperty('--confetti-end-x', `${(Math.random() - 0.5) * 500}px`);
+                piece.style.setProperty('--confetti-end-y', `${fallY}px`);
+                piece.style.animationDelay = `${Math.random() * 0.5}s`;
+                piece.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                container.appendChild(piece);
+            }
+        }
 
-            for (let i = 0; i < 30; i++) {
-                const piece = document.createElement('div');
-                piece.classList.add('tear-piece');
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.animationDelay = Math.random() * 2 + 's';
-                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                container.appendChild(piece);
-            }
-        }
-    </script>
+        function createTears(containerId) {
+            const container = document.getElementById(containerId);
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            for (let i = 0; i < 30; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('tear-piece');
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(piece);
+            }
+        }
+    </script>
 </body>
 </html>
