@@ -192,13 +192,14 @@
         <h2>결과:</h2>
         <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
         <p>다시 한 번 도전해 보세요!</p>
+        <button class="answer-btn" onclick="location.reload()">다시 도전하기</button>
     </div>
 
     <div id="genius-result" style="display:none;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
         <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>정말 놀라워요!! 축하드려용! :D</p>
+        <p>정말 놀라워요!! 축하드려용!</p>
     </div>
 
     <script>
@@ -246,6 +247,16 @@
                         }
                         h2 { font-size: 32px; }
                         p { font-size: 24px; color: red; }
+                        .answer-btn {
+                            background-color: #ffcccc;
+                            color: #333;
+                            border: none;
+                            padding: 10px 20px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            margin: 20px 5px 5px;
+                            border-radius: 5px;
+                        }
                         @keyframes tear-fall {
                             0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
                             50% { opacity: 1; }
@@ -278,8 +289,16 @@
                     <h2>결과:</h2>
                     <p>당신의 지능 지수는 <span style="font-size: 24px; color: red;">바보입니다!</span></p>
                     <p>다시 한 번 도전해 보세요!</p>
+                    <button class="answer-btn" onclick="retryTest()">다시 도전하기</button>
                     <script>
                         // 내부 스크립트 태그의 닫힘을 분리하여 구문 오류 방지
+                        function retryTest() {
+                            if (window.opener) {
+                                window.opener.location.reload(); // 원래 창 새로고침
+                            }
+                            window.close(); // 현재 창 닫기
+                        }
+
                         function createTears(containerId) {
                             const container = document.getElementById(containerId);
                             if (!container) return; // 요소가 없으면 함수 종료
