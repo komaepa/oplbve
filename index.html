@@ -198,7 +198,7 @@
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
         <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>정말 놀라워요!! 축하드려용!</p>
+        <p>정말 놀라워요!! 축하드려용! :D</p>
     </div>
 
     <script>
@@ -279,6 +279,7 @@
                     <p>당신의 지능 지수는 <span style="font-size: 24px; color: red;">바보입니다!</span></p>
                     <p>다시 한 번 도전해 보세요!</p>
                     <script>
+                        // 내부 스크립트 태그의 닫힘을 분리하여 구문 오류 방지
                         function createTears(containerId) {
                             const container = document.getElementById(containerId);
                             if (!container) return; // 요소가 없으면 함수 종료
@@ -297,7 +298,7 @@
                         window.onload = function() {
                             createTears('tear-container-fool');
                         };
-                    </script>
+                    </scr' + 'ipt>
                 </body>
                 </html>
             `);
@@ -329,6 +330,7 @@
             }
         }
 
+        // 기존 createTears 함수 (메인 페이지용)
         function createTears(containerId) {
             const container = document.getElementById(containerId);
             while (container.firstChild) {
