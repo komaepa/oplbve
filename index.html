@@ -3,7 +3,18 @@
 <head>
     <title>똑똑이 테스트</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 0; margin: 0; }
+        /* body 태그에 Flexbox 속성 추가 */
+        body { 
+            font-family: sans-serif; 
+            text-align: center; 
+            padding: 0; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
         
         .main-container {
             display: flex;
@@ -103,19 +114,19 @@
 <body>
 
     <div id="test-start">
-        <h2>당신의 천재성을 테스트해보세요!</h2>
+        <h2>당신의 지능을 테스트해보세요!</h2>
         <button class="answer-btn" onclick="startTest()">테스트 시작</button>
     </div>
 
     <div class="search-box">
-        <input type="text" class="search-input" placeholder="힌트를 검색하려면 클릭하세요...">
+        <input type="text" class="search-input" placeholder="힌트를 찾으려면 여길 클릭하세요...">
         <button class="search-btn" onclick="showFoolResult()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
         </button>
     </div>
     
-    <div class="main-container">
-        <div id="question-1" class="question-box" style="display:none;">
+    <div class="main-container" style="display:none;">
+        <div id="question-1" class="question-box">
             <h3>문제 1: 사과는 무슨 색인가요?</h3>
             <button class="answer-btn" onclick="nextQuestion()">빨강</button>
             <button class="answer-btn" onclick="showFoolResult()">초록</button>
@@ -133,21 +144,21 @@
     <div id="fool-result" style="display:none;">
         <div id="tear-container-fool" class="tear-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
-        <p>다시 한 번 도전해 보세요!</p> 
+        <p style="font-size: 24px; color: red;">당신의 지능 지수는 **바보**입니다!</p>
+        <p>엉엉 ㅠㅠ 바보 인증!</p> 
     </div>
     
     <div id="genius-result" style="display:none;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>21세기의.. 아인슈타인?</p>
+        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 **천재**입니다!</p>
+        <p>놀랍군요! 당신은 이 테스트를 통과했습니다!</p>
     </div>
 
     <script>
         function startTest() {
             document.getElementById('test-start').style.display = 'none';
-            document.getElementById('question-1').style.display = 'block';
+            document.querySelector('.main-container').style.display = 'flex';
         }
 
         function nextQuestion() {
@@ -156,15 +167,13 @@
         }
         
         function showFoolResult() {
-            document.getElementById('question-1').style.display = 'none';
-            document.getElementById('question-2').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'none';
             document.getElementById('fool-result').style.display = 'block';
             createTears('tear-container-fool');
         }
 
         function showGeniusResult() {
-            document.getElementById('question-1').style.display = 'none';
-            document.getElementById('question-2').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'none';
             document.getElementById('genius-result').style.display = 'block';
             createConfetti('confetti-container-genius');
         }
@@ -205,3 +214,4 @@
     </script>
 </body>
 </html>
+변경된 부분 설명
