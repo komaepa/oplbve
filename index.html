@@ -15,7 +15,7 @@
             flex-direction: column;
             min-height: 100vh;
             overflow: hidden;
-            position: relative; /* 자식 요소의 절대 위치 기준이 되도록 추가 */
+            position: relative;
         }
 
         .main-container {
@@ -23,7 +23,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* 뷰포트 전체 높이를 사용 */
+            height: 100vh;
             width: 100%;
         }
 
@@ -45,19 +45,18 @@
             border-radius: 5px;
         }
 
-        /* 검색창 스타일 수정: 상단 중앙으로 이동 */
         .search-box {
             display: flex;
             align-items: center;
             position: absolute;
-            top: 5%; /* 상단에서 5% 떨어진 위치로 조정 */
+            top: 5%;
             left: 50%;
             transform: translateX(-50%);
             border: 1px solid #ddd;
             border-radius: 20px;
             padding: 5px 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 10; /* 다른 요소 위에 겹치지 않도록 z-index 추가 */
+            z-index: 10;
         }
 
         .search-input {
@@ -76,82 +75,35 @@
 
         /* 폭죽 애니메이션 스타일 */
         @keyframes confetti-burst {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                transform: translate(-50%, -50%) scale(1) rotate(180deg);
-                opacity: 1;
-            }
-            20% {
-                transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg);
-                opacity: 0;
-            }
+            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 1; }
+            20% { transform: translate(var(--confetti-x), var(--confetti-y)) scale(1.2) rotate(360deg); opacity: 1; }
+            100% { transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg); opacity: 0; }
         }
 
         .confetti-container-style {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999;
         }
 
         .confetti-piece {
-            width: 10px;
-            height: 10px;
-            background-color: #ff0000;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            animation: confetti-burst 3s forwards;
-            opacity: 0;
-            transform: rotate(45deg);
+            width: 10px; height: 10px; background-color: #ff0000; position: absolute; left: 50%; top: 50%;
+            animation: confetti-burst 3s forwards; opacity: 0; transform: rotate(45deg);
         }
 
         /* 눈물 애니메이션 스타일 */
         @keyframes tear-fall {
-            0% {
-                transform: translateY(-100px) scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(200px) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(200px) scale(1); opacity: 0; }
         }
 
         .tear-container-style {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999;
         }
 
         .tear-piece {
-            width: 15px;
-            height: 15px;
-            background-color: #00bfff;
-            border-radius: 50%;
-            position: absolute;
-            animation: tear-fall 3s forwards;
-            opacity: 0;
-            transform: rotate(20deg);
+            width: 15px; height: 15px; background-color: #00bfff; border-radius: 50%; position: absolute;
+            animation: tear-fall 3s forwards; opacity: 0; transform: rotate(20deg);
         }
     </style>
 </head>
@@ -163,7 +115,7 @@
 
     <div class="search-box">
         <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
-        <button class="search-btn" onclick="openFoolResultNewTab()">
+        <button class="search-btn" onclick="showFoolResult()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
             </svg>
@@ -192,138 +144,56 @@
         <h2>결과:</h2>
         <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
         <p>다시 한 번 도전해 보세요!</p>
-        <button class="answer-btn" onclick="location.reload()">다시 도전하기</button>
+        <button class="answer-btn" onclick="resetTest()">다시 도전하기</button>
     </div>
 
     <div id="genius-result" style="display:none;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
         <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>정말 놀라워요!! 축하드려용!</p>
+        <p>정말 놀라워요!! 축하드려용! :D</p>
     </div>
 
     <script>
+        // 테스트 시작
         function startTest() {
             document.getElementById('test-start').style.display = 'none';
             document.querySelector('.main-container').style.display = 'flex';
         }
 
+        // 문제 2로 이동
         function nextQuestion() {
             document.getElementById('question-1').style.display = 'none';
             document.getElementById('question-2').style.display = 'block';
         }
 
-        // 테스트 문제에서 오답을 선택했을 때 사용되는 함수
+        // 실패 결과 표시 (문제 1,2번 오답 또는 돋보기 클릭 시)
         function showFoolResult() {
-            document.querySelector('.main-container').style.display = 'none';
-            document.getElementById('fool-result').style.display = 'block';
+            document.getElementById('test-start').style.display = 'none'; // 시작 화면 숨기기
+            document.querySelector('.main-container').style.display = 'none'; // 테스트 화면 숨기기
+            document.getElementById('fool-result').style.display = 'flex'; // 실패 결과 화면 표시
             createTears('tear-container-fool');
         }
 
+        // 성공 결과 표시
         function showGeniusResult() {
             document.querySelector('.main-container').style.display = 'none';
-            document.getElementById('genius-result').style.display = 'block';
+            document.getElementById('genius-result').style.display = 'flex';
             createConfetti('confetti-container-genius');
         }
 
-        // 돋보기 버튼을 눌렀을 때 새 창에서 결과를 보여주는 함수
-        function openFoolResultNewTab() {
-            const newWindow = window.open('', '_blank');
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>결과</title>
-                    <style>
-                        body {
-                            font-family: sans-serif;
-                            text-align: center;
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                            height: 100vh;
-                            margin: 0;
-                        }
-                        h2 { font-size: 32px; }
-                        p { font-size: 24px; color: red; }
-                        .answer-btn {
-                            background-color: #ffcccc;
-                            color: #333;
-                            border: none;
-                            padding: 10px 20px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            margin: 20px 5px 5px;
-                            border-radius: 5px;
-                        }
-                        @keyframes tear-fall {
-                            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
-                            50% { opacity: 1; }
-                            100% { transform: translateY(200px) scale(1); opacity: 0; }
-                        }
-                        .tear-container-style {
-                            position: fixed;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            pointer-events: none;
-                            overflow: hidden;
-                            z-index: 9999;
-                        }
-                        .tear-piece {
-                            width: 15px;
-                            height: 15px;
-                            background-color: #00bfff;
-                            border-radius: 50%;
-                            position: absolute;
-                            animation: tear-fall 3s forwards;
-                            opacity: 0;
-                            transform: rotate(20deg);
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div id="tear-container-fool" class="tear-container-style"></div>
-                    <h2>결과:</h2>
-                    <p>당신의 지능 지수는 <span style="font-size: 24px; color: red;">바보입니다!</span></p>
-                    <p>다시 한 번 도전해 보세요!</p>
-                    <button class="answer-btn" onclick="retryTest()">다시 도전하기</button>
-                    <script>
-                        // 내부 스크립트 태그의 닫힘을 분리하여 구문 오류 방지
-                        function retryTest() {
-                            if (window.opener) {
-                                window.opener.location.reload(); // 원래 창 새로고침
-                            }
-                            window.close(); // 현재 창 닫기
-                        }
-
-                        function createTears(containerId) {
-                            const container = document.getElementById(containerId);
-                            if (!container) return; // 요소가 없으면 함수 종료
-                            while (container.firstChild) {
-                                container.removeChild(container.firstChild);
-                            }
-                            for (let i = 0; i < 30; i++) {
-                                const piece = document.createElement('div');
-                                piece.classList.add('tear-piece');
-                                piece.style.left = Math.random() * 100 + '%';
-                                piece.style.animationDelay = Math.random() * 2 + 's';
-                                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                                container.appendChild(piece);
-                            }
-                        }
-                        window.onload = function() {
-                            createTears('tear-container-fool');
-                        };
-                    </scr' + 'ipt>
-                </body>
-                </html>
-            `);
-            newWindow.document.close();
+        // 테스트 초기화 함수
+        function resetTest() {
+            // 모든 화면 숨기기
+            document.getElementById('test-start').style.display = 'flex';
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('question-1').style.display = 'block';
+            document.getElementById('question-2').style.display = 'none';
+            document.getElementById('fool-result').style.display = 'none';
+            document.getElementById('genius-result').style.display = 'none';
         }
 
+        // 폭죽 애니메이션 함수
         function createConfetti(containerId) {
             const container = document.getElementById(containerId);
             const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
@@ -349,7 +219,7 @@
             }
         }
 
-        // 기존 createTears 함수 (메인 페이지용)
+        // 눈물 애니메이션 함수
         function createTears(containerId) {
             const container = document.getElementById(containerId);
             while (container.firstChild) {
