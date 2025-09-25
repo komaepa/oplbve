@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>똑똑이 테스트_최종_최최종_찐최종_ㄹㅇ최종</title>
+    <title>똑똑이 테스트</title>
     <style>
         /* 기본 스타일 */
         body {
@@ -16,7 +16,7 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
-            background-color: #f4f4f9; /* 배경색 변경 */
+            background-color: #f4f4f9;
         }
 
         /* 중앙 컨테이너 및 시작 화면 */
@@ -51,13 +51,13 @@
         #timer {
             font-size: 32px;
             font-weight: bold;
-            color: #d9534f; /* 빨간색 타이머 */
+            color: #d9534f;
             margin-bottom: 20px;
         }
 
         /* 버튼 스타일 (업그레이드) */
         .answer-btn {
-            background-color: #007bff; /* 파란색으로 변경 */
+            background-color: #007bff;
             color: white;
             border: none;
             padding: 12px 25px;
@@ -65,12 +65,12 @@
             cursor: pointer;
             margin: 8px;
             border-radius: 8px;
-            transition: all 0.2s ease-in-out; /* 애니메이션 추가 */
+            transition: all 0.2s ease-in-out;
         }
 
         .answer-btn:hover {
             background-color: #0056b3;
-            transform: scale(1.05); /* 마우스 오버 시 커지게 */
+            transform: scale(1.05);
         }
         
         .answer-btn:active {
@@ -109,7 +109,7 @@
 
         /* 모달 스타일 */
         .modal {
-            display: none; /* 초기 숨김 */
+            display: none;
             position: fixed;
             z-index: 20;
             left: 0;
@@ -161,7 +161,7 @@
 <body>
     <div id="test-start">
         <h2>당신이 똑똑하다는 걸 증명하세요! 💡</h2>
-        <p>⚠️ 주의: 각 문제당 10초의 시간 제한이 있습니다..</p>
+        <p>⚠️ 주의: 각 문제당 10초의 시간 제한이 있습니다.</p>
         <button class="answer-btn" onclick="startTest()">테스트 시작</button>
     </div>
 
@@ -182,28 +182,28 @@
 
     <div id="warning-modal" class="modal">
         <div class="modal-content">
-            <p>🚨 **경고:** 정말 검색하려구요?</p>
+            <p>🚨경고: 정말 검색하려구요?</p>
             <p>음... 과연 정말 맞는 선택일까?... 📉</p>
-            <button class="answer-btn" onclick="continueTest()">까잇거 다시 하면 되지</button>
-            <button class="answer-btn" style="background-color: #d9534f;" onclick="showFoolResult(true)">제발 할게요</button>
+            <button class="answer-btn" onclick="continueTest()">ㄴㄴ</button>
+            <button class="answer-btn" style="background-color: #d9534f;" onclick="showFoolResult(true)">당근빳따쥐</button>
         </div>
     </div>
 
     <div id="fool-result" style="display:none; flex-direction: column; align-items: center; justify-content: center;">
         <div id="tear-container-fool" class="tear-container-style"></div>
         <h2>결과:</h2>
-        <img src="fool.jpeg" alt="바보 슬픈 이미지" style="width: 120px; margin: 15px 0; border-radius: 10px;">
-        <p style="font-size: 28px; color: red; font-weight: bold;">당신의 지능 지수는 바보입니다! 💧</p>
-        <p>다음 번엔 더 집중해 보세요. (힌트를 쓰지 마세요!)</p>
+        <img src="fool.jpeg" alt="바보 슬픈 이미지" style="width: 300px; margin: 15px 0; border-radius: 10px;">
+        <h3 style="font-size: 28px; color: red; font-weight: bold; margin-bottom: 5px;">당신의 지능 지수는 바보입니다! 💧</h3>
+        <p id="fool-message" style="font-size: 18px; color: #555; margin-top: 10px;">결과 메시지</p> 
         <button class="answer-btn" onclick="resetTest()">다시 도전하기</button>
     </div>
 
     <div id="genius-result" style="display:none; flex-direction: column; align-items: center; justify-content: center;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
-        <img src="genius.jpeg" alt="천재 축하 이미지" style="width: 120px; margin: 15px 0; border-radius: 10px;">
+        <img src="genius.jpeg" alt="천재 축하 이미지" style="width: 300px; margin: 15px 0; border-radius: 10px;">
         <p style="font-size: 28px; color: blue; font-weight: bold;">당신의 지능 지수는 천재입니다! 🎉</p>
-        <p>당신은 멋진 사람</p>
+        <p>당신은 멋진 사람! !</p>
         <button class="answer-btn" onclick="resetTest()">다시 도전하기</button>
     </div>
 
@@ -260,7 +260,7 @@
             isTestActive = true;
             document.getElementById('test-start').style.display = 'none';
             document.querySelector('.main-container').style.display = 'flex';
-            shuffleArray(questions); // 문제 배열 섞기
+            shuffleArray(questions);
             showQuestion(currentQuestionIndex);
         }
 
@@ -270,7 +270,7 @@
             const timerElement = document.getElementById('timer');
             timerElement.textContent = timeLeft;
 
-            clearInterval(timerInterval); // 이전 타이머 중지
+            clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 timeLeft--;
                 timerElement.textContent = timeLeft;
@@ -278,7 +278,7 @@
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     if (isTestActive) {
-                        showFoolResult(false, '시간 초과로 인해... ⏰');
+                        showFoolResult(false, '시간 초과로 인해... 다음 번엔 더 빠르게 도전해 보세요! ⏰');
                     }
                 }
             }, 1000);
@@ -295,7 +295,6 @@
             const questionArea = document.getElementById('question-area');
             questionArea.innerHTML = `<h3>${questionData.question}</h3>`;
 
-            // 옵션 배열 섞기
             shuffleArray(questionData.options);
 
             questionData.options.forEach(option => {
@@ -306,22 +305,22 @@
                 questionArea.appendChild(button);
             });
 
-            startTimer(); // 새 질문 로드 시 타이머 시작
+            startTimer();
         }
 
         // 답변 처리
         function handleAnswer(isCorrect) {
-            clearInterval(timerInterval); // 타이머 중지
+            clearInterval(timerInterval);
             if (isCorrect) {
                 currentQuestionIndex++;
-                showQuestion(currentQuestionIndex); // 다음 문제로 이동
+                showQuestion(currentQuestionIndex);
             } else {
-                showFoolResult(false, '아쉽게도 오답입니다! 😵');
+                showFoolResult(false, '아쉽게도 오답입니다! 다시 한 번 도전해 보세요. 😵');
             }
         }
 
-        // 실패 결과 표시
-        function showFoolResult(fromSearch = false, message = '문제를 풀지 못했습니다. 😭') {
+        // 실패 결과 표시 (메시지 동적 변경 로직 포함)
+        function showFoolResult(fromSearch = false, customMessage = '') {
             isTestActive = false;
             clearInterval(timerInterval);
             document.querySelector('.main-container').style.display = 'none';
@@ -329,8 +328,13 @@
             document.getElementById('genius-result').style.display = 'none';
             document.getElementById('fool-result').style.display = 'flex';
 
-            const foolText = document.querySelector('#fool-result p:nth-child(3)');
-            foolText.textContent = fromSearch ? '검색 버튼을 눌렀습니다! (치트키 사용 금지)' : message;
+            const foolMessageElement = document.getElementById('fool-message');
+
+            if (fromSearch) {
+                foolMessageElement.textContent = '이걸 누르네';
+            } else {
+                foolMessageElement.textContent = customMessage;
+            }
 
             createTears('tear-container-fool');
         }
@@ -347,10 +351,9 @@
         // 검색 경고 모달 표시
         function showWarningModal() {
             if (isTestActive) {
-                clearInterval(timerInterval); // 테스트 중이라면 타이머 일시 정지
+                clearInterval(timerInterval);
                 document.getElementById('warning-modal').style.display = 'block';
             } else if (document.getElementById('test-start').style.display !== 'none') {
-                 // 테스트 시작 전이라면 바로 바보 결과
                 showFoolResult(true);
             }
         }
@@ -358,19 +361,17 @@
         // 테스트 계속하기 (모달 닫기)
         function continueTest() {
             document.getElementById('warning-modal').style.display = 'none';
-            startTimer(); // 타이머 재개
+            startTimer();
         }
 
         // 테스트 초기화 함수
         function resetTest() {
             isTestActive = false;
             clearInterval(timerInterval);
-            currentQuestionIndex = 0; // 문제 인덱스 초기화
+            currentQuestionIndex = 0;
             
-            // 검색 입력창 초기화
             document.querySelector('.search-input').value = ''; 
 
-            // 모든 화면 숨기기
             document.getElementById('test-start').style.display = 'flex';
             document.querySelector('.main-container').style.display = 'none';
             document.getElementById('fool-result').style.display = 'none';
@@ -378,7 +379,7 @@
             document.getElementById('warning-modal').style.display = 'none';
         }
 
-        // 폭죽 애니메이션 함수 (기존 유지)
+        // 애니메이션 함수 (생략 없이 유지)
         function createConfetti(containerId) {
             const container = document.getElementById(containerId);
             const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
@@ -402,7 +403,6 @@
             }
         }
 
-        // 눈물 애니메이션 함수 (기존 유지)
         function createTears(containerId) {
             const container = document.getElementById(containerId);
             while (container.firstChild) { container.removeChild(container.firstChild); }
