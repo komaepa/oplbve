@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>똑똑이 테스트</title>
+    <title>똑똑이 테스트_최종_최최종_찐막_ㄹㅇ찐막</title>
     <style>
-        /* Flexbox를 이용해 전체 페이지 콘텐츠를 중앙에 배치 */
+        /* 기본 스타일 */
         body {
-            font-family: sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
             padding: 0;
             margin: 0;
@@ -16,13 +16,21 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
+            background-color: #f4f4f9; /* 배경색 변경 */
         }
 
-        /* 테스트 시작 화면을 세로 정렬 */
+        /* 중앙 컨테이너 및 시작 화면 */
+        #test-start, .main-container, #fool-result, #genius-result {
+            padding: 30px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
         #test-start {
             display: flex;
-            flex-direction: column; /* 세로 정렬 */
-            align-items: center; /* 가운데 정렬 */
+            flex-direction: column;
+            align-items: center;
         }
 
         .main-container {
@@ -30,29 +38,46 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            width: 100%;
+            width: 90%;
+            max-width: 500px;
         }
 
         .question-box {
-            border: 2px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
+            width: 100%;
             margin-bottom: 20px;
         }
 
-        /* 버튼의 색상을 회색으로 변경 */
-        .answer-btn {
-            background-color: #f0f0f0;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 5px;
-            border-radius: 5px;
+        /* 타이머 스타일 */
+        #timer {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d9534f; /* 빨간색 타이머 */
+            margin-bottom: 20px;
         }
 
+        /* 버튼 스타일 (업그레이드) */
+        .answer-btn {
+            background-color: #007bff; /* 파란색으로 변경 */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out; /* 애니메이션 추가 */
+        }
+
+        .answer-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* 마우스 오버 시 커지게 */
+        }
+        
+        .answer-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 검색 상자 - 디자인 유지 및 위치 고정 */
         .search-box {
             display: flex;
             align-items: center;
@@ -64,14 +89,15 @@
             border-radius: 20px;
             padding: 5px 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: white;
             z-index: 10;
         }
-
+        
         .search-input {
             border: none;
             outline: none;
             font-size: 16px;
-            width: 300px;
+            width: 250px;
         }
 
         .search-btn {
@@ -81,7 +107,37 @@
             padding: 0 5px;
         }
 
-        /* 폭죽 애니메이션 스타일 */
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 초기 숨김 */
+            position: fixed;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        /* 애니메이션 스타일 (기존 유지) */
         @keyframes confetti-burst {
             0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 0; }
             10% { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 1; }
@@ -89,41 +145,29 @@
             100% { transform: translate(var(--confetti-end-x), var(--confetti-end-y)) scale(0.8) rotate(720deg); opacity: 0; }
         }
 
-        .confetti-container-style {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999;
-        }
+        .confetti-container-style { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999; }
+        .confetti-piece { width: 10px; height: 10px; background-color: #ff0000; position: absolute; left: 50%; top: 50%; animation: confetti-burst 3s forwards; opacity: 0; transform: rotate(45deg); }
 
-        .confetti-piece {
-            width: 10px; height: 10px; background-color: #ff0000; position: absolute; left: 50%; top: 50%;
-            animation: confetti-burst 3s forwards; opacity: 0; transform: rotate(45deg);
-        }
-
-        /* 눈물 애니메이션 스타일 */
         @keyframes tear-fall {
             0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
             50% { opacity: 1; }
             100% { transform: translateY(200px) scale(1); opacity: 0; }
         }
 
-        .tear-container-style {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999;
-        }
-
-        .tear-piece {
-            width: 15px; height: 15px; background-color: #00bfff; border-radius: 50%; position: absolute;
-            animation: tear-fall 3s forwards; opacity: 0; transform: rotate(20deg);
-        }
+        .tear-container-style { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999; }
+        .tear-piece { width: 15px; height: 15px; background-color: #00bfff; border-radius: 50%; position: absolute; animation: tear-fall 3s forwards; opacity: 0; transform: rotate(20deg); }
     </style>
 </head>
 <body>
     <div id="test-start">
-        <h2>당신이 똑똑하다는 걸 증명하세요!</h2>
+        <h2>당신이 똑똑하다는 걸 증명하세요! 💡</h2>
+        <p>⚠️ **주의:** 각 문제당 **10초**의 시간 제한이 있습니다. 검색은 곧 패배입니다.</p>
         <button class="answer-btn" onclick="startTest()">테스트 시작</button>
     </div>
 
     <div class="search-box">
         <input type="text" class="search-input" placeholder="힌트를 검색하려면 여길 클릭하세요...">
-        <button class="search-btn" onclick="showFoolResult()">
+        <button class="search-btn" onclick="showWarningModal()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
             </svg>
@@ -131,83 +175,214 @@
     </div>
 
     <div class="main-container" style="display:none;">
-        <div id="question-1" class="question-box">
-            <h3>문제 1: 사과는 무슨 색인가요?</h3>
-            <button class="answer-btn" onclick="nextQuestion()">빨강</button>
-            <button class="answer-btn" onclick="showFoolResult()">초록</button>
-            <button class="answer-btn" onclick="showFoolResult()">파랑</button>
-            <button class="answer-btn" onclick="showFoolResult()">색맹을 고려하여 회색, 어두운 갈색, 또는 탁한 노란색</button>
-        </div>
+        <div id="timer">10</div>
+        <div id="question-area" class="question-box">
+            </div>
+    </div>
 
-        <div id="question-2" class="question-box" style="display:none;">
-            <h3>문제 2: 6+6+6*6*0=?</h3>
-            <button class="answer-btn" onclick="showGeniusResult()">12</button>
-            <button class="answer-btn" onclick="showFoolResult()">0</button>
-            <button class="answer-btn" onclick="showFoolResult()">6</button>
+    <div id="warning-modal" class="modal">
+        <div class="modal-content">
+            <p>🚨 **경고:** 정말 검색하려구요?</p>
+            <p>음... 과연 정말 맞는 선택일까?... 📉</p>
+            <button class="answer-btn" onclick="continueTest()">아니요, 다시 풀게요</button>
+            <button class="answer-btn" style="background-color: #d9534f;" onclick="showFoolResult(true)">네, 저는 바보입니다 😭</button>
         </div>
     </div>
 
     <div id="fool-result" style="display:none; flex-direction: column; align-items: center; justify-content: center;">
         <div id="tear-container-fool" class="tear-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: red;">당신의 지능 지수는 바보입니다!</p>
-        <p>다시 한 번 도전해 보세요!</p>
+        <img src="fool.jpeg" alt="바보 슬픈 이미지" style="width: 120px; margin: 15px 0; border-radius: 10px;">
+        <p style="font-size: 28px; color: red; font-weight: bold;">당신의 지능 지수는 바보입니다! 💧</p>
+        <p>다음 번엔 더 집중해 보세요. (힌트를 쓰지 마세요!)</p>
         <button class="answer-btn" onclick="resetTest()">다시 도전하기</button>
     </div>
 
     <div id="genius-result" style="display:none; flex-direction: column; align-items: center; justify-content: center;">
         <div id="confetti-container-genius" class="confetti-container-style"></div>
         <h2>결과:</h2>
-        <p style="font-size: 24px; color: blue;">당신의 지능 지수는 천재입니다!</p>
-        <p>정말 놀라워요!! 축하드려용!</p>
+        <img src="genius.jpeg" alt="천재 축하 이미지" style="width: 120px; margin: 15px 0; border-radius: 10px;">
+        <p style="font-size: 28px; color: blue; font-weight: bold;">당신의 지능 지수는 천재입니다! 🎉</p>
+        <p>당신은 멋진 사람</p>
+        <button class="answer-btn" onclick="resetTest()">다시 도전하기</button>
     </div>
 
     <script>
+        // 문제 데이터
+        const questions = [
+            {
+                id: 1,
+                question: "문제 1: 사과는 무슨 색인가요?",
+                options: [
+                    { text: "빨강", isCorrect: true },
+                    { text: "초록", isCorrect: false },
+                    { text: "파랑", isCorrect: false },
+                    { text: "색맹을 고려하여 회색, 어두운 갈색, 또는 탁한 노란색", isCorrect: false }
+                ]
+            },
+            {
+                id: 2,
+                question: "문제 2: 6+6+6*6*0=?",
+                options: [
+                    { text: "0", isCorrect: false },
+                    { text: "12", isCorrect: true }, // 정답: 6 + 6 + (6*6*0) = 12
+                    { text: "6", isCorrect: false },
+                    { text: "36", isCorrect: false }
+                ]
+            },
+            {
+                id: 3,
+                question: "문제 3: 최근 개봉한 진격의 거인 극장판의 풀네임은 무엇일까요?",
+                options: [
+                    { text: "진격의 거인 극장판: 땅울림 편", isCorrect: false },
+                    { text: "진격의 거인 극장판: 최종결젼 편", isCorrect: false },
+                    { text: "극장판 진격의 거인 완결편 더 라스트 어택", isCorrect: true }, // 정답
+                    { text: "극장판 진격의 거인 완결편 더 파이널 시즌", isCorrect: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let timerInterval;
+        const TIME_LIMIT = 10;
+        let isTestActive = false;
+
+        // 배열의 순서를 무작위로 섞는 함수
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
         // 테스트 시작
         function startTest() {
+            isTestActive = true;
             document.getElementById('test-start').style.display = 'none';
             document.querySelector('.main-container').style.display = 'flex';
+            shuffleArray(questions); // 문제 배열 섞기
+            showQuestion(currentQuestionIndex);
         }
 
-        // 문제 2로 이동
-        function nextQuestion() {
-            document.getElementById('question-1').style.display = 'none';
-            document.getElementById('question-2').style.display = 'block';
+        // 타이머 시작/재설정
+        function startTimer() {
+            let timeLeft = TIME_LIMIT;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = timeLeft;
+
+            clearInterval(timerInterval); // 이전 타이머 중지
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (isTestActive) {
+                        showFoolResult(false, '시간 초과로 인해... ⏰');
+                    }
+                }
+            }, 1000);
         }
 
-        // 실패 결과 표시 (문제 1,2번 오답 또는 돋보기 클릭 시)
-        function showFoolResult() {
-            document.getElementById('test-start').style.display = 'none';
+        // 질문 표시
+        function showQuestion(index) {
+            if (index >= questions.length) {
+                showGeniusResult();
+                return;
+            }
+
+            const questionData = questions[index];
+            const questionArea = document.getElementById('question-area');
+            questionArea.innerHTML = `<h3>${questionData.question}</h3>`;
+
+            // 옵션 배열 섞기
+            shuffleArray(questionData.options);
+
+            questionData.options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('answer-btn');
+                button.textContent = option.text;
+                button.onclick = () => handleAnswer(option.isCorrect);
+                questionArea.appendChild(button);
+            });
+
+            startTimer(); // 새 질문 로드 시 타이머 시작
+        }
+
+        // 답변 처리
+        function handleAnswer(isCorrect) {
+            clearInterval(timerInterval); // 타이머 중지
+            if (isCorrect) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex); // 다음 문제로 이동
+            } else {
+                showFoolResult(false, '아쉽게도 오답입니다! 😵');
+            }
+        }
+
+        // 실패 결과 표시
+        function showFoolResult(fromSearch = false, message = '문제를 풀지 못했습니다. 😭') {
+            isTestActive = false;
+            clearInterval(timerInterval);
             document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('test-start').style.display = 'none';
+            document.getElementById('genius-result').style.display = 'none';
             document.getElementById('fool-result').style.display = 'flex';
+
+            const foolText = document.querySelector('#fool-result p:nth-child(3)');
+            foolText.textContent = fromSearch ? '검색 버튼을 눌렀습니다! (치트키 사용 금지)' : message;
+
             createTears('tear-container-fool');
         }
 
         // 성공 결과 표시
         function showGeniusResult() {
+            isTestActive = false;
+            clearInterval(timerInterval);
             document.querySelector('.main-container').style.display = 'none';
             document.getElementById('genius-result').style.display = 'flex';
             createConfetti('confetti-container-genius');
         }
 
+        // 검색 경고 모달 표시
+        function showWarningModal() {
+            if (isTestActive) {
+                clearInterval(timerInterval); // 테스트 중이라면 타이머 일시 정지
+                document.getElementById('warning-modal').style.display = 'block';
+            } else if (document.getElementById('test-start').style.display !== 'none') {
+                 // 테스트 시작 전이라면 바로 바보 결과
+                showFoolResult(true);
+            }
+        }
+
+        // 테스트 계속하기 (모달 닫기)
+        function continueTest() {
+            document.getElementById('warning-modal').style.display = 'none';
+            startTimer(); // 타이머 재개
+        }
+
         // 테스트 초기화 함수
         function resetTest() {
+            isTestActive = false;
+            clearInterval(timerInterval);
+            currentQuestionIndex = 0; // 문제 인덱스 초기화
+            
+            // 검색 입력창 초기화
+            document.querySelector('.search-input').value = ''; 
+
             // 모든 화면 숨기기
             document.getElementById('test-start').style.display = 'flex';
             document.querySelector('.main-container').style.display = 'none';
-            document.getElementById('question-1').style.display = 'block';
-            document.getElementById('question-2').style.display = 'none';
             document.getElementById('fool-result').style.display = 'none';
             document.getElementById('genius-result').style.display = 'none';
+            document.getElementById('warning-modal').style.display = 'none';
         }
 
-        // 폭죽 애니메이션 함수
+        // 폭죽 애니메이션 함수 (기존 유지)
         function createConfetti(containerId) {
             const container = document.getElementById(containerId);
             const colors = ['#e63946', '#f4a261', '#2a9d8f', '#264653', '#e9c46a'];
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+            while (container.firstChild) { container.removeChild(container.firstChild); }
             for (let i = 0; i < 150; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('confetti-piece');
@@ -227,12 +402,10 @@
             }
         }
 
-        // 눈물 애니메이션 함수
+        // 눈물 애니메이션 함수 (기존 유지)
         function createTears(containerId) {
             const container = document.getElementById(containerId);
-            while (container.firstChild) {
-                container.removeChild(container.firstChild);
-            }
+            while (container.firstChild) { container.removeChild(container.firstChild); }
             for (let i = 0; i < 30; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('tear-piece');
